@@ -17,8 +17,18 @@ function func(request){
 	}
 	if(request.match(/twitter.com\/.+\/status/)){
 		const div = document.querySelector('div.AdaptiveMedia-singlePhoto');
-		const url = div.innerHTML.replace(/\r?\n/g, '').replace(/.+\<img data-aria-label-part="" src="/, '').replace(/".+/, '').replace(/(.+)$/, '$1:orig');
-		const name = url.replace(/^.+\//, '').replace(/:orig/, '');
-		dl(url, name);
+		if(div == null){
+			const doubleDiv = document.querySelector('div.AdaptiveMedia-doublePhoto');
+			Array.prototype.slice.call(doubleDiv.querySelectorAll('img')).forEach( (e)=>{
+				const url = e.src.replace(/(.+)$/, '$1:orig');
+				const name = e.src.replace(/^.+\//, '');
+				dl(url, name);
+			});
+			console.log(doubleDiv.querySelectorAll('img'));
+		}else{
+			const url = div.innerHTML.replace(/\r?\n/g, '').replace(/.+\<img data-aria-label-part="" src="/, '').replace(/".+/, '').replace(/(.+)$/, '$1:orig');
+			const name = url.replace(/^.+\//, '').replace(/:orig/, '');
+			dl(url, name);
+		}
 	}
 };
