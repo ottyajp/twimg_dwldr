@@ -17,5 +17,13 @@ function func(request){
 	}
 	if(request.match(/twitter.com\/.+\/status/)){
 		console.log('status');
+		const div = document.querySelector('div.AdaptiveMedia-singlePhoto');
+		const url = div.innerHTML.replace(/\r?\n/g, '').replace(/.+\<img data-aria-label-part="" src="/, '').replace(/".+/, '').replace(/(.+)$/, '$1:orig');
+		const name = url.replace(/^.+\//, '').replace(/:orig/, '');
+		console.log(url,name);
+		const a = document.createElement('a');
+		a.download = 'dododo';
+		a.href = url;
+		a.click();
 	}
 };
